@@ -4,33 +4,47 @@ solicite ao usuário a quantidade de número e os números e depois os imprima e
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct lista{
-   int num;
-   struct lista *prox;
-} NUMEROS;
+typedef struct lista {
+   int numero;
+   struct list *prox; 
+} LISTA;
+
+LISTA* inserir(LISTA *inicio, int novoNumero){
+   LISTA *novo = (LISTA *) malloc(sizeof(LISTA));
+   novo->numero = novoNumero;
+   novo->prox = inicio;
+   inicio = novo; 
+
+   return inicio;
+}
+
+void imprimir(LISTA *inicio){
+   while(inicio != NULL){
+      printf("%d  ", inicio->numero);
+      inicio = inicio->prox;
+   }
+}
 
 int main(void){
-   NUMEROS *inicio = NULL;
-   NUMEROS *novo = NULL;
-   int qntNumeros;
+   system("clear");
+   int qntNumeros, numero;
+   LISTA *inicio = NULL;
 
-   printf("Quantidade de Numeros: ");
-   scanf("%i", &qntNumeros);
+   printf("Quantidade de numeros: ");
+   scanf("%d", &qntNumeros);
+   fflush(stdin);
 
-   for(int i=0; i<qntNumeros; i++){
-      novo = (NUMEROS *) malloc(sizeof(NUMEROS));
-      printf("Digite o %i numero: ", i+1);
-      scanf("%i", &novo->num); 
-      novo->prox = NULL;
-      inicio = novo;
+   for(int i = 0; i < qntNumeros; i++){
+      printf("Digite o %d numero: ", i+1);
+      scanf("%d", &numero);
+      fflush(stdin);
+
+      inicio = inserir(inicio, numero);
    }
-   
-   int i = 1;
-   while(inicio != NULL){
-      printf("O %d numero eh: %d", i, inicio->num);
-      inicio = inicio->prox;
-      i++;
-   }
+
+   printf("\nNumeros digitados: ");
+   imprimir(inicio);
 
    return 0;
 }
+
