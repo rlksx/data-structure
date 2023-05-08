@@ -15,26 +15,8 @@ typedef struct list {
    struct list *prox;
 } LISTA;
 
-LISTA *inserir(LISTA *listaAtual, Diciplina novaDiciplina) {
-   LISTA *novaLista = (LISTA *)malloc(sizeof(LISTA));
-   novaLista->diciplina = novaDiciplina;
-   novaLista->prox = listaAtual;
-   listaAtual = novaLista;
-
-   return listaAtual;
-}
-
-void imprimirLista(LISTA *lista) {
-   int i = 1;
-   while (lista != NULL) {
-      printf("%d: ", i);
-      printf("Nome: %s | Semestre: %d | ", lista->diciplina.nome, lista->diciplina.semestre);
-      printf("Sala: %d | Dia: %s\n", lista->diciplina.sala, lista->diciplina.dia);
-
-      lista = lista->prox;
-      i++;
-   }
-}
+LISTA *inserir(LISTA *listaAtual, Diciplina novaDiciplina);
+void imprimirLista(LISTA *lista);
 
 int main(void) {
    system("clear");
@@ -62,4 +44,25 @@ int main(void) {
    imprimirLista(listaAtual);
 
    return 0;
+}
+
+LISTA *inserir(LISTA *listaAtual, Diciplina novaDiciplina) {
+   LISTA *novaLista = (LISTA *)malloc(sizeof(LISTA));
+   novaLista->diciplina = novaDiciplina;
+   novaLista->prox = listaAtual;
+   listaAtual = novaLista;
+
+   return listaAtual;
+}
+
+void imprimirLista(LISTA *lista){
+   int i = 1;
+   while (lista != NULL) {
+      printf("%d: ", i);
+      printf("Nome: %s | Semestre: %d | ", lista->diciplina.nome, lista->diciplina.semestre);
+      printf("Sala: %d | Dia: %s\n", lista->diciplina.sala, lista->diciplina.dia);
+
+      lista = lista->prox;
+      i++;
+   }
 }
