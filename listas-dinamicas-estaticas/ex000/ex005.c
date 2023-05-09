@@ -7,5 +7,44 @@ verifique se a lista linear encadeada está ordenada. Suponha que a lista não c
 typedef struct lista {
    int numero;
    struct lista *prox;
-}LISTA;
+} LISTA;
 
+LISTA* inserirNumero(int novoNumero, LISTA *listaAtual) {
+   LISTA *novaLista = (LISTA *)malloc(sizeof(LISTA));
+   novaLista->numero = novoNumero;
+   novaLista->prox = listaAtual;
+   return novaLista;
+}
+
+void verificarOrdenacao(LISTA *lista) {
+   while(lista != NULL && lista->prox != NULL) {
+      
+      if(lista->numero < lista->prox->numero) {
+         printf("lista não esta ordenada");
+         return;
+      }
+
+      lista = lista->prox;
+   }
+   printf("lista esta ordenada");
+}
+
+int main(void) {
+   system("clear");
+
+   LISTA *listaAtual = NULL;
+   int qntNumero, i, numero;
+
+   printf("Digite a quantidade de numeros: ");
+   scanf("%i", &qntNumero);
+
+   for (i = 0; i < qntNumero; i++) {
+      printf("Digite o %i numero: ", i + 1);
+      scanf("%i", &numero);
+
+      listaAtual = inserirNumero(numero, listaAtual);
+   }
+   verificarOrdenacao(listaAtual);
+
+   return 0;
+}
