@@ -8,14 +8,12 @@ Exemplo:
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct list
-{
+typedef struct list {
    char nome[15];
    struct list *prox;
 } LISTA;
 
-LISTA *inserirNome(LISTA *listaAtual, char nome[15])
-{
+LISTA *inserirNome(LISTA *listaAtual, char nome[15]) {
    LISTA *novaLista = (LISTA *)malloc(sizeof(LISTA));
    strcpy(novaLista->nome, nome);
    novaLista->prox = listaAtual;
@@ -23,16 +21,12 @@ LISTA *inserirNome(LISTA *listaAtual, char nome[15])
    return novaLista;
 }
 
-LISTA *compararListas(LISTA *lista1, LISTA *lista2)
-{
+LISTA *compararListas(LISTA *lista1, LISTA *lista2) {
    LISTA *resultado = NULL;
-   while (lista1 != NULL)
-   {
+   while (lista1 != NULL) {
       LISTA *aux = lista2;
-      while (aux != NULL)
-      {
-         if (strcmp(lista1->nome, aux->nome) == 0)
-         {
+      while (aux != NULL) {
+         if (strcmp(lista1->nome, aux->nome) == 0) {
             resultado = inserirNome(resultado, lista1->nome);
             break;
          }
@@ -43,8 +37,7 @@ LISTA *compararListas(LISTA *lista1, LISTA *lista2)
    return resultado;
 }
 
-void imprimirResultado(LISTA *resultado)
-{
+void imprimirResultado(LISTA *resultado) {
    while (resultado != NULL)
    {
       printf("%s  ", resultado->nome);
