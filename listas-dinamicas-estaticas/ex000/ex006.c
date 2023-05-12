@@ -28,14 +28,15 @@ LISTA *compararListas(LISTA *lista1, LISTA *lista2)
    LISTA *resultado = NULL;
    while (lista1 != NULL)
    {
-      while (lista2 != NULL)
+      LISTA *aux = lista2;
+      while (aux != NULL)
       {
-         if (strcmp(lista1->nome, lista2->nome) == 0)
+         if (strcmp(lista1->nome, aux->nome) == 0)
          {
             resultado = inserirNome(resultado, lista1->nome);
             break;
          }
-         lista2 = lista2->prox;
+         aux = aux->prox;
       }
       lista1 = lista1->prox;
    }
