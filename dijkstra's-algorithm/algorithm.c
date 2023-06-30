@@ -20,24 +20,23 @@ void dijkstra(Grafo *grafo, char origem, char destino);
 int main()
 {
     char origem, destino;
-    int vertices, distancia;
+    int numVertices, distancia;
     Grafo grafo;
 
     FILE *arquivo = fopen("../graph.txt", "r");
 
     if (arquivo == NULL)
     {
-        printf("Erro: Arquivo vazio!");
+        printf("Erro: Ocorreu um erro durante a leitura do arquivo!");
         return 1;
     }
 
-    fscanf(arquivo, "%d", &vertices);
+    fscanf(arquivo, "%d", &numVertices);
 
-    inicializarGrafo(&grafo, vertices);
+    inicializarGrafo(&grafo, numVertices);
     while (fscanf(arquivo, " %c %c %d", &origem, &destino, &distancia) != EOF)
-    {
         adicionarAresta(&grafo, origem, destino, distancia);
-    }
+    
 
     fclose(arquivo);
 
@@ -58,9 +57,8 @@ void inicializarGrafo(Grafo *grafo, int vertices)
     for (int i = 0; i < vertices; i++)
     {
         for (int j = 0; j < vertices; j++)
-        {
             grafo->caminho[i][j] = 0;
-        }
+        
     }
 }
 
