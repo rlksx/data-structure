@@ -13,7 +13,7 @@ typedef struct
 
 void inicializarGrafo(Grafo *grafo, int vertices);
 void adicionarAresta(Grafo *grafo, char origem, char destino, int distancia);
-int encontrarMenorDistancia(int distancia[], int vistados[], int vertices);
+int encontrarMenorDistancia(int distancia[], int visitados[], int vertices);
 void imprimirCaminho(int verticesPais[], int destino);
 void dijkstra(Grafo *grafo, char origem, char destino);
 
@@ -41,10 +41,10 @@ int main()
 
     fclose(arquivo);
 
-    printf("Insira o ponto de origem : ");
-    scanf("%c", &origem);
+    printf("Insira o ponto de origem: ");
+    scanf(" %c", &origem);
     printf("Insira o ponto de destino: ");
-    scanf(" %c", destino);
+    scanf(" %c", &destino);
 
     dijkstra(&grafo, origem, destino);
 
@@ -91,18 +91,48 @@ void dijkstra(Grafo *grafo, char origem, char destino)
 
     for (int i = 0; i < grafo->numVertices - 1; i++)
     {
-        int u = encontrarMenorDistancia(distancias, visitados, grafo->caminho);
-        visitados[u] = 1;
+        int aux = encontrarMenorDistancia(distancias, visitados, grafo->numVertices);
+        visitados[aux] = 1;
         for (int j = 0; j < grafo->numVertices; j++)
         {
-            if (!visitados[j] && grafo->caminho[u][j] && distancias[u] != INT_MAX && distancias[u] + grafo->caminho[u][j] < distancias[j])
+            if (!visitados[j] && grafo->caminho[aux][j] && distancias[aux] != INT_MAX && distancias[aux] + grafo->caminho[aux][j] < distancias[j])
             {
-                distancias[j] = distancias[u] + grafo->caminho[u][j];
-                verticesPais[j] = u;
+                distancias[j] = distancias[aux] + grafo->caminho[aux][j];
+                verticesPais[j] = aux;
             }
         }
-
-        printf("A caminho entre %c e %c: ", origem, destino);
-        imprimirCaminho(verticesPais, indexDestino);
-        printf("\nDistancia total: %d\n", distancias[indexDestino]);
     }
+
+    printf("Caminho entre %c e %c: ", origem, destino);
+    imprimirCaminho(verticesPais, indexDestino);
+    printf("\nDistancia total: %d\n", distancias[indexDestino]);
+}
+
+int encontrarMenorDistancia(int distancias[], int visitados[], int vertices)
+{
+    int min = INT_MAX;
+    int indiceMin;
+
+    for (int i = 0; i < vertices; i++)
+    {
+        if (!visitados[i] && distancias[i] <= min)
+        {
+            min = distancias[i];
+            indiceMin = i;
+        }
+    }
+
+    return indiceMin;
+}
+
+void imprimirCaminho(int verticesPais[], int destino)
+{
+    if (verticesPais[destino] == -1)
+    {
+        printf("%d ", destino);
+        return;
+    }
+
+    imprimirCaminho(verticesPais, verticesPais[destino]);
+    printf("%d ", destino);
+}
